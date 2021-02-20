@@ -1,17 +1,23 @@
-didYouComp = ['do the dishes', 'do the laundry', 'feed the dogs', 'water the plants',
-    'meditate', 'get the groceries']
+didYouCompDaily = ['do the dishes', 'do the laundry', 'feed the dogs', 'water the plants', 'sweep the floor']
+didYouCompWeekly = ['get the groceries for', 'clean the house', 'change the bedsheets']
 haveYouComp = ['been working out', 'been studying programming', 'been fixing your posture', 'been eating healthy',
-    'learned something new', 'went on a vacation']
+    'learned something new', 'went on a vacation', 'been saving up', 'been catching up with friends and family']
 
 //object for the message components
 const messageComponent = {
     firstComp: ['Did you', 'Have you'], 
     secondComp: { //second component is based on the first component
-        'Did you': didYouComp,
+        'Did you': {
+            daily: didYouCompDaily,
+            weekly: didYouCompWeekly
+        },
         'Have you': haveYouComp
     },
     thirdComp: {
-        'Did you': ['today', 'this week', 'yesterday'],
+        'Did you': {
+            daily: ['today', 'this morning', 'this evening', 'this afternoon'],
+            weekly: ['this week', 'last week', 'the past week']
+        },
         'Have you': ['lately', 'this month', 'this year']
     }
 };
@@ -19,49 +25,54 @@ const messageComponent = {
 //function that will construct the message, returns a message object
 const constructMessage = () => {
     const message = {
-        randomMessage: '',
-        displayMessage() {
-            console.log(this.randomMessage);
+        choreMessage: '',
+        lifestyleMessage: '',
+        displayChoreMessage() {
+            console.log(`CHORE REMINDER:\n${this.choreMessage}\n`);
+        },
+        displayLifestyleMessage() {
+            console.log(`LIFESTYLE REMINDER:\n${this.lifestyleMessage}\n`);
+        },
+        displayBothMessage() {
+            this.displayChoreMessage();
+            this.displayLifestyleMessage();      
         }
     }
 
-    let randomNum = Math.floor(Math.random * messageComponent.firstComp.length)
+    //construct message for daily and lifestyle reminders
+    for (let i = 0; i < messageComponent.firstComp.length; i++) {
+        let compValRandomIdx;
+        let secondCompVal;
+        let thirdCompVal;
 
-    let randomMessage = messageComponent.firstComp[randomNum];
+        switch (messageComponent.firstComp[i]) {
+            case 'Did you': 
+                const secondCompKeys = Object.keys(messageComponent.secondComp['Did you']);
+                const compKeyRandomIdx = Math.floor(Math.random() * secondCompKeys.length);
+                const didYouSecondComp = messageComponent.secondComp['Did you'][secondCompKeys[compKeyRandomIdx]];      //randomly pick between daily or weekly keys  
+                compValRandomIdx = Math.floor(Math.random() * didYouSecondComp.length);
+                secondCompVal = didYouSecondComp[compValRandomIdx];     //randomly selects a value from one of the properties of 'Did you' of secondComp
+                
+                const didYouThirdComp = messageComponent.thirdComp['Did you'][secondCompKeys[compKeyRandomIdx]];    //third comp key stays the same as second comp
+                compValRandomIdx = Math.floor(Math.random() * didYouThirdComp.length);
+                thirdCompVal = didYouThirdComp[compValRandomIdx];   //randomly selects a value from one of the properties of 'Did you' of thirdComp
 
-    message.randomMessage = randomMessage;
+                message.choreMessage = messageComponent.firstComp[i] + ' ' + secondCompVal + ' ' + thirdCompVal + '?';      //construct chore message
+                break;
+            case 'Have you':
+                compValRandomIdx = Math.floor(Math.random() * messageComponent.secondComp['Have you'].length);
+                secondCompVal = messageComponent.secondComp['Have you'][compValRandomIdx];
+
+                compValRandomIdx = Math.floor(Math.random() * messageComponent.thirdComp['Have you'].length);
+                thirdCompVal = messageComponent.thirdComp['Have you'][compValRandomIdx];
+
+                message.lifestyleMessage = messageComponent.firstComp[i] + ' ' + secondCompVal + ' ' + thirdCompVal + '?';
+                break;
+        }
+    }
+    
     return message;
 };
 
-
-
 const message = constructMessage();
-message.displayMessage();
-
-//factory function for every theme component
-/*const constructThemeComp = (mComp, iComp, cComp = mComp) => { 
-    const componentPerTheme = {
-        'Mean': mComp, 
-        'Inspirational': iComp,
-        'Complimentary': cComp
-    }
-
-    return componentPerTheme;
-}*/
-
-/*const _messageComponent = {
-    theme: ['Mean', 'Inspirational', 'Complimentary'],
-    emphasizers: ['so', 'very', 'really']
-    firstComp: ['You', 'You are', 'Your'], //first component of the message should be either of these
-    secondComp: { //second component is based on the first component
-        'You': constructComp(['smell', 'look', 'dress', 'dance'], ['will', 'can']),
-        'You are': constructComp(['so', 'very'], ['going to'], ['a', 'an']),
-        'Your': constructComp(['face', 'breath', 'momma'], ['future', 'life'], ['face', 'body', 'fashion style'])
-    }
-    thirdComp: { //third component is also based on the first component
-        'You': constructComp(['bad', 'awful', 'horrible'], ['do big things!', 'change the world for the better!'], 
-            ['good', 'great', ''])
-        'You are':
-        'Your':
-    }
-}*/
+message.displayBothMessage();
