@@ -33,7 +33,7 @@ const constructMessage = () => {
         displayLifestyleMessage() {
             console.log(`LIFESTYLE REMINDER:\n${this.lifestyleMessage}\n`);
         },
-        displayBothMessage() {
+        displayBothMessages() {
             this.displayChoreMessage();
             this.displayLifestyleMessage();      
         }
@@ -75,4 +75,5 @@ const constructMessage = () => {
 };
 
 const message = constructMessage();
-message.displayBothMessage();
+
+message.displayBothMessages();
