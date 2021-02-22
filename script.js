@@ -22,6 +22,7 @@ const messageComponent = {
     }
 };
 
+//object for the reminders
 const reminder = {
     choreReminder: '',
     lifestyleReminder: '',
@@ -35,8 +36,8 @@ const reminder = {
         this.displayChoreMessage();
         this.displayLifestyleMessage();      
     },
-    constructReminders() {
-        //construct message for daily and lifestyle reminders
+    constructRandomReminders() {
+        //construct random daily and lifestyle reminders using the strings in the messageComponent object
         for (let i = 0; i < messageComponent.firstComp.length; i++) {
             let compValRandomIdx;
             let secondCompVal;
@@ -70,5 +71,5 @@ const reminder = {
     }
 }
 
-reminder.constructReminders();
+reminder.constructRandomReminders();
 reminder.displayBothMessages();
