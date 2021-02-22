@@ -10,11 +10,11 @@ This is a variation of the Mixed Messages Portfolio project set by Codeacademy. 
 
 ## Table of Contents
 
-* [Features] (#features)
-* [Technologies] (#technologies)
-* [Setup] (#setup)
-* [Usage] (#usage)
-* [Output] (#output)
+* [Features](#features)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Output](#output)
 
 ## Features
 
